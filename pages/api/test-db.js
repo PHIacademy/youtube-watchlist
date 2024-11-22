@@ -7,7 +7,7 @@ export default async function handler(req, res) {
       throw new Error('Database connection string not found in environment variables');
     }
 
-    // Step 1: Create table
+    // First command: Create table
     await sql`
       CREATE TABLE IF NOT EXISTS videos (
         id BIGINT PRIMARY KEY,
@@ -18,34 +18,13 @@ export default async function handler(req, res) {
       )
     `;
 
-    // Step 2: Test insert
-    const testVideo = {
-      id: Date.now(),
-      url: 'https://youtube.com/test',
-      title: 'Test Video',
-      category: 'Test',
-      added_at: new Date().toISOString()
-    };
-
-    await sql`
-      INSERT INTO videos (id, url, title, category, added_at)
-      VALUES (${testVideo.id}, ${testVideo.url}, ${testVideo.title}, ${testVideo.category}, ${testVideo.added_at})
-    `;
-
-    // Step 3: Test select
-    const videos = await sql`SELECT * FROM videos LIMIT 1`;
-
-    // Step 4: Test timestamp
-    const timestamp = await sql`SELECT NOW()`;
-
-    // Step 5: Clean up test data
-    await sql`DELETE FROM videos WHERE url = 'https://youtube.com/test'`;
+    // Second command: Test query
+    const result = await sql`SELECT NOW()`;
 
     return res.status(200).json({ 
       success: true, 
-      message: 'Database connected and operations successful!',
-      serverTime: timestamp.rows[0].now,
-      testData: videos.rows[0],
+      message: 'Database connected successfully!',
+      serverTime: result.rows[0].now,
       env: {
         hasUrl: !!process.env.POSTGRES_URL,
         hasUser: !!process.env.POSTGRES_USER,
