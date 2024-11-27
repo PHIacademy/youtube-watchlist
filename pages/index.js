@@ -207,7 +207,6 @@ export default function Home() {
                     {video.category || 'Uncategorized'}
                   </span>
                 )}
-                <span className="timestamp">{video.addedAt}</span>
               </div>
               <a 
                 href={video.url} 
