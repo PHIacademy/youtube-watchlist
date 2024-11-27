@@ -182,9 +182,10 @@ export default function Home() {
           </button>
         </div>
         <div className="video-list">
-          {videos.map(video => (
-            <div key={video.id} className="video-item">
-              <div className="video-details">
+        {videos.map(video => (
+          <div key={video.id} className="video-item">
+            <div className="video-details">
+              <div className="category-row">
                 {editingVideoId === video.id ? (
                   <input 
                     type="text" 
@@ -206,23 +207,24 @@ export default function Home() {
                     {video.category || 'Uncategorized'}
                   </span>
                 )}
-                <a 
-                  href={video.url} 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                >
-                  {video.title}
-                </a>
                 <span className="timestamp">{video.addedAt}</span>
               </div>
-              <button 
-                className="delete-btn" 
-                onClick={() => deleteVideo(video.id)}
+              <a 
+                href={video.url} 
+                target="_blank" 
+                rel="noopener noreferrer"
               >
-                🗑️
-              </button>
+                {video.title}
+              </a>
             </div>
-          ))}
+            <button 
+              className="delete-btn" 
+              onClick={() => deleteVideo(video.id)}
+            >
+              🗑️
+            </button>
+          </div>
+        ))}
         </div>
       </div>
 
@@ -327,15 +329,25 @@ export default function Home() {
           margin-right: 10px;
         }
 
+        .category-row {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          margin-bottom: 5px;
+        }
+
         .category {
           font-size: 0.8em;
           color: #666;
           cursor: pointer;
-          margin-bottom: 5px;
         }
 
         .category-edit {
-          margin-bottom: 5px;
+          font-size: 0.8em;
+          padding: 2px 4px;
+          border: 1px solid #ddd;
+          border-radius: 3px;
+          width: auto;
         }
 
         .video-details a {
@@ -345,8 +357,9 @@ export default function Home() {
         }
 
         .timestamp {
-          color: #666;
           font-size: 0.8em;
+          color: #666;
+          margin-left: auto;
         }
 
         .delete-btn {
