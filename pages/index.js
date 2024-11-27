@@ -79,7 +79,7 @@ export default function Home() {
       addedAt: new Date().toLocaleString()
     };
 
-    const updatedVideos = [...videos, newVideo];
+    const updatedVideos = [newVideo, ...videos];
     setVideos(updatedVideos);
     setNewVideoUrl('');
     setNewVideoTitle('');
